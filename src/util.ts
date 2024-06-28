@@ -31,14 +31,3 @@ export const applySkipConstraints = (params: {
   }
   return params.value;
 };
-
-export const detectFileTypeFromBuffer = async (
-  buffer: ArrayBuffer | Uint8Array
-): Promise<string> => {
-  const { fileTypeFromBuffer } = await (eval('import("file-type")') as Promise<
-    typeof import("file-type")
-  >);
-
-  const type = await fileTypeFromBuffer(buffer);
-  return type ? type.mime : "unknown";
-};
