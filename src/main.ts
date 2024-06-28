@@ -6,10 +6,10 @@ import { createContext } from "./context";
 const port = process.env.PORT || 4000;
 const origin = [
   "http://localhost:4000",
-  "http://localhost:3000",
-  ...(process.env.FE_URL ? process.env.FE_URL : []),
+  process.env.FE_URL || "http://localhost:3000",
 ];
 function main() {
+  console.log(origin);
   const yoga = createYoga({
     cors: {
       origin: origin,
