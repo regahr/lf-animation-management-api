@@ -7,30 +7,6 @@ import path from "path";
 import JSZip from "jszip";
 import { DotLottieMetadata, JsonLottieAnimation } from "./type";
 
-// const Binary = new GraphQLScalarType({
-//   name: "Binary",
-//   description: "Binary custom scalar type",
-//   parseValue(value) {
-//     if (typeof value === "string") {
-//       return Buffer.from(value, "base64"); // Convert base64 string to Buffer
-//     }
-//     throw new Error("Byte value must be a base64 encoded string");
-//   },
-//   serialize(value) {
-//     if (value instanceof Buffer) {
-//       return value.toString("base64"); // Convert Buffer to base64 string
-//     }
-//     throw new Error("Byte value must be an instance of Buffer");
-//   },
-
-//   parseLiteral(ast) {
-//     if (ast.kind === Kind.STRING) {
-//       return Buffer.from(ast.value, "base64"); // Convert base64 string to Buffer
-//     }
-//     throw new Error("Byte literal value must be a base64 encoded string");
-//   },
-// });
-
 const typeDefinitions = /* GraphQL */ `
   scalar File
   type Query {
@@ -40,6 +16,18 @@ const typeDefinitions = /* GraphQL */ `
     id: ID!
     name: String!
     content: Content!
+    metadata: Metadata
+    createdAt: String!
+  }
+
+  type Metadata {
+    id: ID!
+    version: String
+    revision: String
+    keywords: String
+    author: String
+    generator: String
+    animation: Animation!
   }
 
   type Content {
@@ -65,7 +53,11 @@ const resolvers = {
     ) => {
       const where = args.filter
         ? {
-            OR: [{ name: { contains: args.filter } }],
+            OR: [
+              { name: { contains: args.filter } },
+              { metadata: { author: { contains: args.filter } } },
+              { metadata: { keywords: { contains: args.filter } } },
+            ],
           }
         : {};
       const take = applyTakeConstraints({
@@ -79,6 +71,11 @@ const resolvers = {
       });
       return context.prisma.animation.findMany({
         where,
+        orderBy: [
+          {
+            createdAt: "desc",
+          },
+        ],
         take,
         skip,
       });
@@ -205,6 +202,14 @@ const resolvers = {
         },
       });
     },
+    metadata: (parent: Animation, args: {}, context: GraphQLContext) => {
+      return context.prisma.metadata.findUnique({
+        where: {
+          animationId: parent.id,
+        },
+      });
+    },
+    createdAt: (parent: Animation) => parent.createdAt.toISOString(),
   },
 };
 

@@ -18,6 +18,18 @@ model Animation {
   createdAt   DateTime  @default(now())
   name        String
   content     Content?
+  metadata    Metadata?
+}
+
+model Metadata {
+  id            Int        @id @default(autoincrement())
+  version       String?
+  revision      String?
+  keywords      String?     
+  author        String?     
+  generator     String?     
+  animation     Animation  @relation(fields: [animationId], references: [id])
+  animationId   Int        @unique
 }
 
 model Content {
