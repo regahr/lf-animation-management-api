@@ -34,19 +34,20 @@ This project is a GraphQL API for managing Lottie animations, built using GraphQ
 ## Design Decisions
 
 1. **GraphQL-Yoga**: Chosen for its simplicity and ease of setup, making it ideal for rapid development.
-2. **Prisma ORM**: Utilized for efficient database management, allowing quick integration with SQLite for data persistence.
+2. **Prisma ORM with SQLite**: Utilized for efficient database management, allowing quick integration with SQLite for data persistence.
 3. **TypeScript**: Employed for type safety and improved developer experience.
-4. **Model Division**:
+4. **Render**: Selected for deployment due to its ease of use and straightforward setup process.
+5. **Model Division**:
    - **Animation**: Contains core information such as `id`, `createdAt`, and `name`.
    - **Content**: Includes `filename`, `filetype`, `metadata`, `content` (stringified JSON), and a foreign key to `Animation`.
    - **Metadata**: Holds `version`, `revision`, `keywords`, `author`, `generator`, and a foreign key to `Animation`.
-5. **Type Definitions**:
+6. **Type Definitions**:
    - **Query**: `getAnimation` accepts filters to search by `Animation.name`, `Animation.Metadata.author`, and `Animation.Metadata.keywords`.
    - **Mutation**: `uploadAnimation` accepts a file, validates its extension, parses the JSON content from dotLottie files, and stores the data accordingly.
-6. **Code Organization**:
+7. **Code Organization**:
    - Utils and TypeScript types are separated into distinct files for better readability and developer experience.
    - Main file (`main.ts`) is kept simple.
-7. **Prettier**: Used for code formatting to maintain cleanliness and consistency.
+8. **Prettier**: Used for code formatting to maintain cleanliness and consistency.
 
 ## API Schema
 
