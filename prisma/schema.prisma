@@ -24,7 +24,7 @@ model Animation {
 model Metadata {
   id            Int        @id @default(autoincrement())
   version       String?
-  revision      String?
+  revision      Int?
   keywords      String?     
   author        String?     
   generator     String?     

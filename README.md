@@ -152,7 +152,7 @@ type Mutation {
 
 ## Folder Structure
 
-```
+```sh
 lottie-animation-management/
 │
 ├── prisma/

@@ -151,6 +151,7 @@ const resolvers = {
             throw new GraphQLError(`Failed to read the .json file.`);
           }
         }
+        console.log(dotLottieMetadata);
         if (
           dotLottieMetadata &&
           dotLottieMetadata.animations &&
@@ -183,8 +184,22 @@ const resolvers = {
             animationId: newAnimation.id,
           },
         });
+
+        console.log(dotLottieMetadata);
+
+        await context.prisma.metadata.create({
+          data: {
+            version: dotLottieMetadata?.version || "",
+            author: dotLottieMetadata?.author || "",
+            generator: dotLottieMetadata?.generator || "",
+            keywords: dotLottieMetadata?.keywords || "",
+            revision: dotLottieMetadata?.revision || null,
+            animationId: newAnimation.id,
+          },
+        });
         return newAnimation;
       } catch (e: unknown) {
+        console.log(e);
         throw new GraphQLError(
           (e instanceof GraphQLError && e.message) ||
             `Animation: ${name}' failed to be uploaded`

@@ -1,7 +1,7 @@
 export type DotLottieAnimationMetadata = {
   id?: string;
-  direction?: string;
-  speed?: string;
+  direction?: number;
+  speed?: number;
   playMode?: string;
   loop?: boolean;
   autoplay?: boolean;
@@ -11,7 +11,7 @@ export type DotLottieAnimationMetadata = {
 
 export type DotLottieMetadata = {
   version?: string;
-  revision?: string;
+  revision?: number;
   keywords?: string;
   author?: string;
   generator?: string;

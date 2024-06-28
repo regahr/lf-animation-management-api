@@ -9,7 +9,7 @@ CREATE TABLE "Animation" (
 CREATE TABLE "Metadata" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "version" TEXT,
-    "revision" TEXT,
+    "revision" INTEGER,
     "keywords" TEXT,
     "author" TEXT,
     "generator" TEXT,
