@@ -34,7 +34,7 @@ This project is a GraphQL API for managing Lottie animations, built using GraphQ
 ## Design Decisions
 
 1. **GraphQL-Yoga**: Chosen for its simplicity and ease of setup, making it ideal for rapid development.
-2. **Prisma ORM**: Utilized for efficient database management, allowing quick integration with SQLite for data persistence.
+2. **Prisma ORM with SQLite**: Utilized for efficient database management, allowing quick integration with SQLite for data persistence.
 3. **TypeScript**: Employed for type safety and improved developer experience.
 4. **Model Division**:
    - **Animation**: Contains core information such as `id`, `createdAt`, and `name`.
