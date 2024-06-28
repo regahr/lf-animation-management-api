@@ -17,4 +17,15 @@ model Animation {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   name        String
+  content     Content?
+}
+
+model Content {
+  id            Int        @id @default(autoincrement())
+  filename      String
+  filetype      String
+  metadata      String?     
+  content       String     
+  animation     Animation  @relation(fields: [animationId], references: [id])
+  animationId   Int        @unique
 }

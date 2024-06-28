@@ -1,13 +1,13 @@
 import { GraphQLError } from "graphql";
 
-const parseIntSafe = (value: string): number | null => {
+export const parseIntSafe = (value: string): number | null => {
   if (/^(\d+)$/.test(value)) {
     return parseInt(value, 10);
   }
   return null;
 };
 
-const applyTakeConstraints = (params: {
+export const applyTakeConstraints = (params: {
   min: number;
   max: number;
   value: number;
@@ -20,7 +20,10 @@ const applyTakeConstraints = (params: {
   return params.value;
 };
 
-const applySkipConstraints = (params: { min: number; value: number }) => {
+export const applySkipConstraints = (params: {
+  min: number;
+  value: number;
+}) => {
   if (params.value < params.min) {
     throw new GraphQLError(
       `'skip' argument value '${params.value}' needs to be larger than '${params.min}'.`
@@ -29,4 +32,13 @@ const applySkipConstraints = (params: { min: number; value: number }) => {
   return params.value;
 };
 
-export const Util = { applyTakeConstraints, applySkipConstraints };
+export const detectFileTypeFromBuffer = async (
+  buffer: ArrayBuffer | Uint8Array
+): Promise<string> => {
+  const { fileTypeFromBuffer } = await (eval('import("file-type")') as Promise<
+    typeof import("file-type")
+  >);
+
+  const type = await fileTypeFromBuffer(buffer);
+  return type ? type.mime : "unknown";
+};
